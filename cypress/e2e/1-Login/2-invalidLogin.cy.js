@@ -6,16 +6,17 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 });
 
 describe('Login', () => {
-  it('Valid Login', () => {
+  it('Invalid Login', () => {
     //Redirect to login
     cy.visit('/')
 
-    //Fill the form
+    //Fill the form with username and password different
     cy.fixture('loginFixture.json').then((login) => {
       cy.get('input[name="username"]').type(login.username).should('have.value', login.username)
-      cy.get('input[type="password"]').type(login.password).should('have.value', login.password)
+      cy.get('input[type="password"]').type(login.password2).should('have.value', login.password2)
       cy.get('form').submit()
-      cy.url().should('include', '/index')
+      cy.wait(4000)
+      cy.contains("Invalid credentials")
     })
       
   })
