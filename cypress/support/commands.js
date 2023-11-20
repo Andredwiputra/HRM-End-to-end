@@ -10,9 +10,16 @@
 //
 //
 // -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
+Cypress.Commands.add('login', (username, password) => {
+    cy.session([username, password], () => {
+        cy.visit('/')
+        cy.get('input[name="username"]').type(username).should('have.value', 'Admin')
+        cy.get('input[type="password').type(password).should('have.value', 'admin123')
+        cy.get('form').submit()
+    })        
+})
+
+
 // -- This is a child command --
 // Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
 //
